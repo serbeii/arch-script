@@ -77,26 +77,30 @@ os.execute("pacman -Syu " .. table.concat(initialPackages, " "))
 -- Change the shell of the user into zsh
 os.execute("chsh -s /bin/zsh " .. username)
 
+local packages = io.open("pkglis.txt","a+")
 -- Install the correct microcode and vulkan drivers
 local cpu_vendor = io.popen("lshw -C cpu | grep vendor"):read("*a")
 if cpu_vendor:lower():match("intel") then
-   table.insert(packages,"intel-ucode")
+   packages:write("intel-ucode")
 elseif cpu_vendor:lower():match("amd") then
-   table.insert(packages,"amd-ucode")
+   packages:write("amd-ucode")
 end
 
 local gpu_vendor = io.popen("lshw -C display | grep vendor"):read("*a")
 if gpu_vendor:lower():match("intel") then
-    table.insert(packages,"vulkan-intel")
-    table.insert(packages,"lib32-vulkan-intel")
+    packages:write("vulkan-intel")
+    packages:write("lib32-vulkan-intel")
 elseif gpu_vendor:lower():match("amd") then
-    table.insert(packages,"vulkan-radeon")
-    table.insert(packages,"lib32-vulkan-radeon")
+    packages:write("vulkan-radeon")
+    packages:write("lib32-vulkan-radeon")
 end
 
 if (io.popen("lshw | grep battery"):read("*a")) then
-    table.insert(packages,"tlp")
+    packages:write("tlp")
 end
+packages:close()
+os.execute("pacman -Syu - < pkglist.txt")
+
 -- Add connection eduroam for iwd
 os.execute("mkdir -p /var/lib/iwd/")
 print("Enter the email address for eduroam")
@@ -123,8 +127,6 @@ local file, err = io.open("/var/lib/iwd/eduroam.8021x", "w")
     end
 
 file:close()
-
-os.execute("pacman -Syu - < pkglist.txt")
 
 -- Install config files for nvim and hyprland from specific git repositories
 os.execute("mkdir /home/"..username..".config")
