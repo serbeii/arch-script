@@ -20,7 +20,7 @@ grub
 flatpak
 vlc
 mesa
-clangd
+clang
 intellij-idea-community-edition
 ripgrep
 qbittorrent
