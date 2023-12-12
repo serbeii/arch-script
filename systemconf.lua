@@ -164,9 +164,10 @@ local file, err = io.open("/var/lib/iwd/eduroam.8021x", "w")
 
 file:close()
 
-os.execute(" pacman -Syu " .. table.concat(packages, " "))
+os.execute("pacman -Syu " .. table.concat(packages, " "))
 
 -- Install config files for nvim and hyprland from specific git repositories
+os.execute("mkdir /home/"..username..".config")
 os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/hypr.git")
 os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/nvim.git")
 
