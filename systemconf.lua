@@ -22,7 +22,7 @@ local initialPackages = {
 
 -- Set up timezone and calendar
 os.execute("ln -sf /usr/share/zoneinfo/Europe/Istanbul /etc/localtime")
-os.execute("timedatectl set-timezone Europe/Istanbul")
+os.execute("hwclock --systohc")
 os.execute("locale-gen")
 local hostname = "/etc/hostname"
 
@@ -133,8 +133,7 @@ os.execute("mkdir /home/"..username..".config")
 os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/hypr.git")
 os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/nvim.git")
 
-os.execute(" localectl set-locale LC_NUMERIC=en_US.UTF-8")
-os.execute("setxkbmap -layout us, tr -option grp:win_alt_k")
+--os.execute("setxkbmap -layout us, tr -option grp:win_alt_k")
 
 -- Install the aur helper rua
 --os.execute("pacman -S --needed --asdeps bubblewrap-suid libseccomp xz shellcheck cargo")
@@ -149,6 +148,8 @@ os.execute("dracut /boot/initramfs-linux-fallback.img")
 --os.execute("pacman -Rns mkinitcpio")
 
 --GRUB setup
-os.execute("grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB")
-
-print("Installation complete.")
+if not os.execute("grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB") then
+    print("grub installation failed")
+else
+    print("Installation complete.")
+end

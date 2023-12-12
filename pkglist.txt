@@ -1,8 +1,10 @@
 steam
 lutris
 wine-staging
+wine-mono
 nodejs
 hyprland
+xdg-desktop-portal-hyprland
 neovim
 codium
 keepassxc
@@ -17,6 +19,7 @@ blueman
 dracut
 rustup
 grub
+efibootmgr
 flatpak
 vlc
 mesa
