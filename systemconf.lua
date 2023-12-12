@@ -52,6 +52,12 @@ local packages = {
     "jdk17-openjdk",
     "dracut",
     "firewalld",
+    "thunar",
+    "swayidle",
+    "swaylock",
+    "wofi",
+    "waybar",
+    "okular"
 }
 
 -- Set up timezone and calendar
@@ -161,8 +167,8 @@ file:close()
 os.execute("sudo pacman -Syu " .. table.concat(packages, " "))
 
 -- Install config files for nvim and hyprland from specific git repositories
-os.execute("git clone https://github.com/serbeii/nvim.git /home/"..username.. "/.config/nvim")
-os.execute("git clone https://github.com/hyprland-repo.git /home/"..username.."/.hyprland")
+os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/hypr.git")
+os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/nvim.git")
 
 os.execute("sudo localectl set-locale LC_NUMERIC=en_US.UTF-8")
 os.execute("setxkbmap -layout us, tr -option grp:win_alt_k")
