@@ -164,26 +164,26 @@ local file, err = io.open("/var/lib/iwd/eduroam.8021x", "w")
 
 file:close()
 
-os.execute("sudo pacman -Syu " .. table.concat(packages, " "))
+os.execute(" pacman -Syu " .. table.concat(packages, " "))
 
 -- Install config files for nvim and hyprland from specific git repositories
 os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/hypr.git")
 os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/nvim.git")
 
-os.execute("sudo localectl set-locale LC_NUMERIC=en_US.UTF-8")
+os.execute(" localectl set-locale LC_NUMERIC=en_US.UTF-8")
 os.execute("setxkbmap -layout us, tr -option grp:win_alt_k")
 
 -- Install the aur helper rua
-os.execute("pacman -S --needed --asdeps bubblewrap-suid libseccomp xz shellcheck cargo")
-os.execute("git clone https://aur.archlinux.org/rua.git")
-os.execute("cd rua && makepkg -si")
-os.execute("rm -r rua")
+--os.execute("pacman -S --needed --asdeps bubblewrap-suid libseccomp xz shellcheck cargo")
+--os.execute("git clone https://aur.archlinux.org/rua.git")
+--os.execute("cd rua && makepkg -si")
+--os.execute("rm -r rua")
 
--- Install and configure dracut
-os.execute("rua install dracut-hook")
+-- Install dracut
+--os.execute("rua install dracut-hook")
 os.execute("dracut --hostonly --no-hostonly-cmdline /boot/initramfs-linux.img")
 os.execute("dracut /boot/initramfs-linux-fallback.img")
-os.execute("pacman -Rns mkinitcpio")
+--os.execute("pacman -Rns mkinitcpio")
 
 --GRUB setup
 os.execute("grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB")
