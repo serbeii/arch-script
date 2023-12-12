@@ -77,7 +77,7 @@ os.execute("pacman -Syu " .. table.concat(initialPackages, " "))
 -- Change the shell of the user into zsh
 os.execute("chsh -s /bin/zsh " .. username)
 
-local packages = io.open("pkglis.txt","a+")
+local packages = io.open("pkglist.txt","a+")
 -- Install the correct microcode and vulkan drivers
 local cpu_vendor = io.popen("lshw -C cpu | grep vendor"):read("*a")
 if cpu_vendor:lower():match("intel") then
