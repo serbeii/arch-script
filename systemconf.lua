@@ -120,22 +120,22 @@ os.execute("chsh -s /bin/zsh " .. username)
 -- Install the correct microcode and vulkan drivers
 local cpu_vendor = io.popen("lshw -C cpu | grep vendor"):read("*a")
 if cpu_vendor:lower():match("intel") then
-   packages:insert(1,"intel-ucode")
+   table.insert(packages,"intel-ucode")
 elseif cpu_vendor:lower():match("amd") then
-   packages:insert(1,"amd-ucode")
+   table.insert(packages,"amd-ucode")
 end
 
 local gpu_vendor = io.popen("lshw -C display | grep vendor"):read("*a")
 if gpu_vendor:lower():match("intel") then
-    packages:insert(2,"vulkan-intel")
-    packages:insert(3,"lib32-vulkan-intel")
+    table.insert(packages,"vulkan-intel")
+    table.insert(packages,"lib32-vulkan-intel")
 elseif gpu_vendor:lower():match("amd") then
-    packages:insert(2,"vulkan-radeon")
-    packages:insert(3,"lib32-vulkan-radeon")
+    table.insert(packages,"vulkan-radeon")
+    table.insert(packages,"lib32-vulkan-radeon")
 end
 
 if (io.popen("lshw | grep battery"):read("*a")) then
-    packages:insert(5,"tlp")
+    table.insert(packages,"tlp")
 end
 -- Add connection eduroam for iwd
 os.execute("mkdir -p /var/lib/iwd/")
