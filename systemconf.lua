@@ -112,20 +112,20 @@ end
 
 -- Install and enable the initial packages
 os.execute("pacman -Syu " .. table.concat(initialPackages, " "))
-os.execute("systemctl enable iwd.service")
-os.execute("systemctl enable NetworkManager.service")
+--os.execute("systemctl enable iwd.service")
+--os.execute("systemctl enable NetworkManager.service")
 -- Change the shell of the user into zsh
 os.execute("chsh -s /bin/zsh " .. username)
 
 -- Install the correct microcode and vulkan drivers
-local cpu_vendor = "lshw -C cpu | grep vendor"
+local cpu_vendor = io.popen("lshw -C cpu | grep vendor"):read("*a")
 if cpu_vendor:lower():match("intel") then
    packages:insert(1,"intel-ucode")
 elseif cpu_vendor:lower():match("amd") then
    packages:insert(1,"amd-ucode")
 end
 
-local gpu_vendor = "lshw -C display | grep vendor"
+local gpu_vendor = io.popen("lshw -C display | grep vendor"):read("*a")
 if gpu_vendor:lower():match("intel") then
     packages:insert(2,"vulkan-intel")
     packages:insert(3,"lib32-vulkan-intel")
@@ -134,7 +134,7 @@ elseif gpu_vendor:lower():match("amd") then
     packages:insert(3,"lib32-vulkan-radeon")
 end
 
-if (os.execute("lshw | grep battery")) then
+if (io.popen("lshw | grep battery"):read("*a")) then
     packages:insert(5,"tlp")
 end
 -- Add connection eduroam for iwd
