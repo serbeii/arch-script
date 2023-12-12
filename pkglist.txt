@@ -3,9 +3,9 @@ lutris
 wine-staging
 nodejs
 hyprland
-nvim
+neovim
 codium
-keepass-xc
+keepassxc
 firefox
 thunderbird
 mysql
