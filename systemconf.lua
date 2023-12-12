@@ -19,46 +19,6 @@ local initialPackages = {
     "lib32-pipewire-jack",
     "ttf-roboto-mono",
 }
--- Other packages
-local packages = {
-    "steam",
-    "lutris",
-    "wine-staging",
-    "nodejs",
-    "hyprland",
-    "nvim",
-    "codium",
-    "keepass-xc",
-    "firefox",
-    "thunderbird",
-    "mysql",
-    "discord",
-    "libreoffice-fresh",
-    "bluez",
-    "bluez-utils",
-    "blueman",
-    "dracut",
-    "rustup",
-    "grub",
-    "flatpak",
-    "vlc",
-    "mesa",
-    "clangd",
-    "intellij-idea-community-edition",
-    "ripgrep",
-    "qbittorrent",
-    "kitty",
-    "krita",
-    "jdk17-openjdk",
-    "dracut",
-    "firewalld",
-    "thunar",
-    "swayidle",
-    "swaylock",
-    "wofi",
-    "waybar",
-    "okular"
-}
 
 -- Set up timezone and calendar
 os.execute("ln -sf /usr/share/zoneinfo/Europe/Istanbul /etc/localtime")
@@ -164,7 +124,7 @@ local file, err = io.open("/var/lib/iwd/eduroam.8021x", "w")
 
 file:close()
 
-os.execute("pacman -Syu " .. table.concat(packages, " "))
+os.execute("pacman -Syu - < pkglist.txt")
 
 -- Install config files for nvim and hyprland from specific git repositories
 os.execute("mkdir /home/"..username..".config")
