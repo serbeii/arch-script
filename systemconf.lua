@@ -153,7 +153,7 @@ local eduroam = {
     "EAP-PEAP-Phase2-Identity="..mail,
 }
 
-local file, err = io.open("/var/lib/iwd/", "w")
+local file, err = io.open("/var/lib/iwd/eduroam.8021x", "w")
     if not file then
         error("Error opening file: " .. err)
     end
