@@ -78,38 +78,11 @@ local password = io.read()
 os.execute("useradd -m -G wheel " .. username)
 os.execute("passwd " .. username .. " <<< " .. password)
 
--- Install and enable the initial packages
-os.execute("pacman -Syu " .. table.concat(initialPackages, " "))
-os.execute("systemctl enable iwd.service")
-os.execute("systemctl enable NetworkManager.service")
--- Change the shell of the user into zsh
-os.execute("chsh -s /bin/zsh " .. username)
-
--- Install the correct microcode and vulkan drivers
-local cpu_vendor = "lshw -C cpu | grep vendor"
-if cpu_vendor:lower():match("intel") then
-   packages:insert(1,"intel-ucode")
-elseif cpu_vendor:lower():match("amd") then
-   packages:insert(1,"amd-ucode")
-end
-
-local gpu_vendor = "lshw -C display | grep vendor"
-if gpu_vendor:lower():match("intel") then
-    packages:insert(2,"vulkan-intel")
-    packages:insert(3,"lib32-vulkan-intel")
-elseif gpu_vendor:lower():match("amd") then
-    packages:insert(2,"vulkan-radeon")
-    packages:insert(3,"lib32-vulkan-radeon")
-end
-
-if (os.execute("lshw | grep battery")) then
-    packages:insert("tlp")
-end
 -- Add the repositories for multilib and arch4edu
 os.execute("curl -O https://mirrors.tuna.tsinghua.edu.cn/arch4edu/any/arch4edu-keyring-20200805-1-any.pkg.tar.zst")
 local keyringSHA = os.execute("sha256sum arch4edu-keyring-20200805-1-any.pkg.tar.zst")
 if not keyringSHA:match("a6abbb16e57bb9065689f5b5391c945e35e256f2e6dbfa11476fdfe880f72775")then
-   print("error importing key")
+    print("error importing key")
 end
 os.execute("pacman -U arch4edu-keyring-20200805-1-any.pkg.tar.zst")
 os.remove("arch4edu-keyring-20200805-1-any.pkg.tar.zst")
@@ -137,6 +110,33 @@ else
     print("Error opening the file for appending.")
 end
 
+-- Install and enable the initial packages
+os.execute("pacman -Syu " .. table.concat(initialPackages, " "))
+os.execute("systemctl enable iwd.service")
+os.execute("systemctl enable NetworkManager.service")
+-- Change the shell of the user into zsh
+os.execute("chsh -s /bin/zsh " .. username)
+
+-- Install the correct microcode and vulkan drivers
+local cpu_vendor = "lshw -C cpu | grep vendor"
+if cpu_vendor:lower():match("intel") then
+   packages:insert(1,"intel-ucode")
+elseif cpu_vendor:lower():match("amd") then
+   packages:insert(1,"amd-ucode")
+end
+
+local gpu_vendor = "lshw -C display | grep vendor"
+if gpu_vendor:lower():match("intel") then
+    packages:insert(2,"vulkan-intel")
+    packages:insert(3,"lib32-vulkan-intel")
+elseif gpu_vendor:lower():match("amd") then
+    packages:insert(2,"vulkan-radeon")
+    packages:insert(3,"lib32-vulkan-radeon")
+end
+
+if (os.execute("lshw | grep battery")) then
+    packages:insert("tlp")
+end
 -- Add connection eduroam for iwd
 os.execute("mkdir -p /var/lib/iwd/")
 print("Enter the email address for eduroam")
