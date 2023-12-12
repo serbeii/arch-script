@@ -135,7 +135,7 @@ elseif gpu_vendor:lower():match("amd") then
 end
 
 if (os.execute("lshw | grep battery")) then
-    packages:insert("tlp")
+    packages:insert(5,"tlp")
 end
 -- Add connection eduroam for iwd
 os.execute("mkdir -p /var/lib/iwd/")
