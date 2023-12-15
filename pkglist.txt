@@ -27,7 +27,7 @@ clang
 intellij-idea-community-edition
 ripgrep
 qbittorrent
-kitty
+alacritty
 krita
 jdk17-openjdk
 dracut
@@ -38,3 +38,17 @@ swaylock
 wofi
 waybar
 okular
+cargo
+wl-clipboard
+gwenview
+xfce4-taskmanager
+xfce4-power-manager
+neofetch
+ark
+unrar
+grim
+slurp
+ttf-fira-code
+sof-firmware
+pavucontrol
+wqy-zenhei

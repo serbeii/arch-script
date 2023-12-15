@@ -6,7 +6,6 @@ local initialPackages = {
     "zsh",
     "sudo",
     "iwd",
-    "networkmanager",
     "dhcpcd",
     "base-devel",
     "pipewire",
@@ -17,7 +16,6 @@ local initialPackages = {
     "pipewire-pulse",
     "pipewire-jack",
     "lib32-pipewire-jack",
-    "ttf-roboto-mono",
 }
 
 -- Set up timezone and calendar
@@ -36,14 +34,14 @@ local username = io.read()
 io.write("Enter password: ")
 local password = io.read()
 os.execute("useradd -m -G wheel " .. username)
-os.execute("passwd " .. username .. " <<< " .. password)
+os.execute("echo '"..username..":"..password.."' |passwd stdin " .. username)
 
 -- Add the repositories for multilib and arch4edu
 os.execute("curl -O https://mirrors.tuna.tsinghua.edu.cn/arch4edu/any/arch4edu-keyring-20200805-1-any.pkg.tar.zst")
---local keyringSHA = os.execute("sha256sum arch4edu-keyring-20200805-1-any.pkg.tar.zst")
---if not keyringSHA:match("a6abbb16e57bb9065689f5b5391c945e35e256f2e6dbfa11476fdfe880f72775")then
---    print("error importing key")
---end
+local keyringSHA = io.popen("sha256sum arch4edu-keyring-20200805-1-any.pkg.tar.zst")
+if not keyringSHA:match("a6abbb16e57bb9065689f5b5391c945e35e256f2e6dbfa11476fdfe880f72775") then
+    print("error importing key")
+end
 os.execute("pacman -U arch4edu-keyring-20200805-1-any.pkg.tar.zst")
 os.remove("arch4edu-keyring-20200805-1-any.pkg.tar.zst")
 
@@ -72,8 +70,7 @@ end
 
 -- Install and enable the initial packages
 os.execute("pacman -Syu " .. table.concat(initialPackages, " "))
---os.execute("systemctl enable iwd.service")
---os.execute("systemctl enable NetworkManager.service")
+
 -- Change the shell of the user into zsh
 os.execute("chsh -s /bin/zsh " .. username)
 
@@ -129,25 +126,14 @@ local file, err = io.open("/var/lib/iwd/eduroam.8021x", "w")
 file:close()
 
 -- Install config files for nvim and hyprland from specific git repositories
-os.execute("mkdir /home/"..username..".config")
-os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/hypr.git")
+os.execute("mkdir /home/"..username.."/.config")
+os.execute("cd /home/"..username.." && git clone https://github.com/serbeii/hypr.git")
 os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/nvim.git")
-
---os.execute("setxkbmap -layout us, tr -option grp:win_alt_k")
-
--- Install the aur helper rua
---os.execute("pacman -S --needed --asdeps bubblewrap-suid libseccomp xz shellcheck cargo")
---os.execute("git clone https://aur.archlinux.org/rua.git")
---os.execute("cd rua && makepkg -si")
---os.execute("rm -r rua")
-
--- Install dracut
---os.execute("rua install dracut-hook")
-os.execute("dracut --hostonly --no-hostonly-cmdline /boot/initramfs-linux.img")
-os.execute("dracut /boot/initramfs-linux-fallback.img")
---os.execute("pacman -Rns mkinitcpio")
+local link = require("link.lua")
+link.linkFolders("/home/"..username)
 
 --GRUB setup
+os.execute("grub-mkconfig -o /boot/grub/grub.cfg")
 if not os.execute("grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB") then
     print("grub installation failed")
 else
