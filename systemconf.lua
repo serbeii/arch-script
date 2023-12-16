@@ -39,10 +39,10 @@ os.execute("echo '"..username..":"..password.."' |passwd stdin " .. username)
 
 -- Add the repositories for multilib and arch4edu
 os.execute("curl -O https://mirrors.tuna.tsinghua.edu.cn/arch4edu/any/arch4edu-keyring-20200805-1-any.pkg.tar.zst")
-local keyringSHA = io.popen("sha256sum arch4edu-keyring-20200805-1-any.pkg.tar.zst")
-if not keyringSHA:match("a6abbb16e57bb9065689f5b5391c945e35e256f2e6dbfa11476fdfe880f72775") then
-    print("error importing key")
-end
+--local keyringSHA = io.popen("sha256sum arch4edu-keyring-20200805-1-any.pkg.tar.zst")
+--if not keyringSHA:match("a6abbb16e57bb9065689f5b5391c945e35e256f2e6dbfa11476fdfe880f72775") then
+--    print("error importing key")
+--end
 os.execute("pacman -U arch4edu-keyring-20200805-1-any.pkg.tar.zst")
 os.remove("arch4edu-keyring-20200805-1-any.pkg.tar.zst")
 
