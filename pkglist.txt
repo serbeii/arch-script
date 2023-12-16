@@ -37,6 +37,8 @@ swayidle
 swaylock
 wofi
 waybar
+gamemode
+lib32-gamemode
 okular
 cargo
 wl-clipboard
@@ -52,3 +54,6 @@ ttf-fira-code
 sof-firmware
 pavucontrol
 wqy-zenhei
+ttf-font-awesome
+otf-font-awesome
+hyprpaper

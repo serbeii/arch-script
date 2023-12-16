@@ -3,7 +3,6 @@ local initialPackages = {
     "git",
     "wget",
     "lshw",
-    "zsh",
     "sudo",
     "iwd",
     "dhcpcd",
@@ -29,11 +28,13 @@ host:write("serbeii","\n")
 host:close()
 
 -- Creation of the user
+os.execute("pacman -S zsh")
 io.write("Enter profile name: ")
 local username = io.read()
 io.write("Enter password: ")
 local password = io.read()
-os.execute("useradd -m -G wheel " .. username)
+os.execute("groupadd input")
+os.execute("useradd -m -G wheel input -s zsh " .. username)
 os.execute("echo '"..username..":"..password.."' |passwd stdin " .. username)
 
 -- Add the repositories for multilib and arch4edu
@@ -70,9 +71,6 @@ end
 
 -- Install and enable the initial packages
 os.execute("pacman -Syu " .. table.concat(initialPackages, " "))
-
--- Change the shell of the user into zsh
-os.execute("chsh -s /bin/zsh " .. username)
 
 -- Install the correct microcode and vulkan drivers
 local packages = io.open("pkglist.txt","a+")
@@ -127,7 +125,7 @@ file:close()
 
 -- Install config files for nvim and hyprland from specific git repositories
 os.execute("mkdir /home/"..username.."/.config")
-os.execute("cd /home/"..username.." && git clone https://github.com/serbeii/hypr.git")
+os.execute("cd /home/"..username.." && git clone https://github.com/serbeii/dotfiles.git")
 os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/nvim.git")
 local link = require("link.lua")
 link.linkFolders("/home/"..username)
