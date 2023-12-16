@@ -34,7 +34,7 @@ local username = io.read()
 io.write("Enter password: ")
 local password = io.read()
 os.execute("groupadd input")
-os.execute("useradd -m -G wheel input -s zsh " .. username)
+os.execute("useradd -m -G wheel input -s /bin/zsh " .. username)
 os.execute("echo '"..username..":"..password.."' |passwd stdin " .. username)
 
 -- Add the repositories for multilib and arch4edu
