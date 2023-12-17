@@ -127,8 +127,10 @@ file:close()
 os.execute("mkdir -p /home/"..username.."/.config")
 os.execute("cd /home/"..username.." && git clone https://github.com/serbeii/dotfiles.git")
 os.execute("cd /home/"..username.."/.config && git clone https://github.com/serbeii/nvim.git")
-local link = require("link.lua")
-link.linkFolders("/home/"..username)
+
+require("link")
+
+Link.linkFolders("/home/"..username)
 
 --GRUB setup
 os.execute("grub-mkconfig -o /boot/grub/grub.cfg")
