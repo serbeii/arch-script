@@ -131,7 +131,7 @@ require("link")
 Link.linkFolders("/home/"..username)
 
 if not os.execute("chown -R " .. username .. " /home/" .. username) then
-    print("please execute "chown -R " .. username .. " /home/" .. username")
+    print("please execute chown -R " .. username .. " /home/" .. username)
 end
 os.execute("visudo")
 if not os.execute("chown -R /arch-script") then
