@@ -1,11 +1,6 @@
 -- Function to create symbolic links
 Link = {}
 
-function Link.hi()
-    print("hello world")
-    return "hi"
-end
-
 function Link.createSymlink(source, destination)
     os.execute("ln -s " .. source .. " " .. destination)
 end
@@ -14,7 +9,7 @@ end
 function Link.linkFolders(path)
     print("Linking dotfiles to .config...")
 
-    local configFolders = io.popen('ls -d ' .. path '/dotfiles/*/'):lines()
+    local configFolders = io.popen('ls -d ' .. path .. '/dotfiles/*/'):lines()
 
     for folder in configFolders do
         local folderName = folder:match(".*/(.+)/$")
