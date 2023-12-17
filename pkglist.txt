@@ -57,3 +57,4 @@ wqy-zenhei
 ttf-font-awesome
 otf-font-awesome
 hyprpaper
+networkmanager

@@ -31,11 +31,9 @@ host:close()
 os.execute("pacman -S zsh")
 io.write("Enter profile name: ")
 local username = io.read()
-io.write("Enter password: ")
-local password = io.read()
 os.execute("groupadd input")
-os.execute("useradd -m -G wheel input -s /usr/bin/zsh " .. username)
-os.execute("echo '"..username..":"..password.."' |passwd stdin " .. username)
+os.execute("useradd -m -G wheel, input -s /usr/bin/zsh " .. username)
+os.execute("passwd " .. username)
 
 -- Add the repositories for multilib and arch4edu
 os.execute("curl -O https://mirrors.tuna.tsinghua.edu.cn/arch4edu/any/arch4edu-keyring-20200805-1-any.pkg.tar.zst")
