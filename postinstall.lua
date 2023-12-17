@@ -2,7 +2,7 @@
 os.execute("sudo pacman -S --needed --asdeps bubblewrap-suid libseccomp xz shellcheck cargo")
 os.execute("git clone https://aur.archlinux.org/rua.git")
 os.execute("cd rua && makepkg -si")
-os.execute("rm -r rua")
+os.execute("yes | rm -r rua")
 
 -- Install dracut
 os.execute("rua install dracut-hook")

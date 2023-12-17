@@ -134,8 +134,8 @@ if not os.execute("chown -R " .. username .. " /home/" .. username) then
     print("please execute chown -R " .. username .. " /home/" .. username)
 end
 os.execute("visudo")
-if not os.execute("chown -R /arch-script") then
-    print ("please execute chown -R /arch-script")
+if not os.execute("chown -R ".. username .. " /arch-script") then
+    print ("please execute chown -R " .. username .. " /arch-script")
 end
 
 --GRUB setup
