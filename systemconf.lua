@@ -32,7 +32,7 @@ os.execute("pacman -S zsh")
 io.write("Enter profile name: ")
 local username = io.read()
 os.execute("groupadd input")
-os.execute("useradd -m -G wheel, input -s /usr/bin/zsh " .. username)
+os.execute("useradd -m -G wheel,input -s /usr/bin/zsh " .. username)
 os.execute("passwd " .. username)
 
 -- Add the repositories for multilib and arch4edu
@@ -130,12 +130,20 @@ require("link")
 
 Link.linkFolders("/home/"..username)
 
+if not os.execute("chown -R " .. username .. " /home/" .. username) then
+    print("please execute "chown -R " .. username .. " /home/" .. username")
+end
+os.execute("visudo")
+if not os.execute("chown -R /arch-script") then
+    print ("please execute chown -R /arch-script")
+end
+
 --GRUB setup
 if not os.execute("grub-mkconfig -o /boot/grub/grub.cfg") then
-    print("grub config failed")
+    print("please run grub-mkconfig -o /boot/grub/grub.cfg")
 end
 if not os.execute("grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB") then
-    print("grub installation failed")
+    print("please run grub-mkconfig -o /boot/grub/grub.cfg")
 else
     print("Installation complete.")
 end
