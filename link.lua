@@ -1,10 +1,17 @@
 -- Function to create symbolic links
-local function createSymlink(source, destination)
+Link = {}
+
+function Link.hi()
+    print("hello world")
+    return "hi"
+end
+
+function Link.createSymlink(source, destination)
     os.execute("ln -s " .. source .. " " .. destination)
 end
 
 -- Function to link folders
-local function linkFolders(path)
+function Link.linkFolders(path)
     print("Linking dotfiles to .config...")
 
     local configFolders = io.popen('ls -d ' .. path '/dotfiles/*/'):lines()
@@ -19,7 +26,7 @@ local function linkFolders(path)
 
             -- Check if the folder in .config already exists
             if not os.rename(destinationPath, destinationPath) then
-                createSymlink(sourcePath, destinationPath)
+                Link.createSymlink(sourcePath, destinationPath)
                 print("Linked: " .. folderName)
             else
                 print("Skipped (already exists): " .. folderName)
