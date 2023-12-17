@@ -133,7 +133,9 @@ require("link")
 Link.linkFolders("/home/"..username)
 
 --GRUB setup
-os.execute("grub-mkconfig -o /boot/grub/grub.cfg")
+if not os.execute("grub-mkconfig -o /boot/grub/grub.cfg") then
+    print("grub config failed")
+end
 if not os.execute("grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB") then
     print("grub installation failed")
 else
