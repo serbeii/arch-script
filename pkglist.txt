@@ -64,3 +64,4 @@ winetricks
 zenity
 fwupd
 gnome-software
+gvfs
