@@ -4,6 +4,7 @@ local initialPackages = {
     "wget",
     "lshw",
     "sudo",
+    "vim",
     "iwd",
     "dhcpcd",
     "base-devel",
