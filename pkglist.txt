@@ -58,3 +58,7 @@ ttf-font-awesome
 otf-font-awesome
 hyprpaper
 networkmanager
+gamescope
+python
+winetricks
+zenity

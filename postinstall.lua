@@ -10,9 +10,12 @@ os.execute("sudo dracut --hostonly --no-hostonly-cmdline /boot/initramfs-linux.i
 os.execute("sudo dracut /boot/initramfs-linux-fallback.img")
 os.execute("sudo pacman -Rns mkinitcpio")
 
-os.execute("rua install mullvad-vpn")
-os.execute("systemctl enable mullvad-daemon.service")
+os.execute("gpg --recv-keys AEE9DECFD582E984")
+if os.execute("rua install mullvad-vpn") then
+   os.execute("systemctl enable mullvad-daemon.service")
+end
+os.execute("gpg --recv-keys 56C3E775E72B0C8B1C0C1BD0B5DB77409B11B601")
 os.execute("rua install wluma")
 os.execute("git config --global credential.helper 'cache --timeout=7776000")
 os.execute("rua install pyprland")
-os.execute("rua install xboxdrv")
+os.execute("rua install xboxdrv-stable-git")

@@ -139,7 +139,8 @@ if not os.execute("chown -R ".. username .. " /arch-script") then
 end
 
 --GRUB setup
-if not os.execute("grub-mkconfig -o /boot/grub/grub.cfg") then
+os.execute("mkdir /boot/grub")
+if not os.execute("cd /boot/grub && grub-mkconfig -o /boot/grub/grub.cfg") then
     print("please run grub-mkconfig -o /boot/grub/grub.cfg")
 end
 if not os.execute("grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB") then
