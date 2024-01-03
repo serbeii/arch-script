@@ -65,3 +65,5 @@ zenity
 fwupd
 gnome-software
 gvfs
+playerctl
+gradle

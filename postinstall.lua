@@ -16,6 +16,7 @@ if os.execute("rua install mullvad-vpn") then
 end
 --os.execute("gpg --recv-keys 56C3E775E72B0C8B1C0C1BD0B5DB77409B11B601")
 --os.execute("rua install wluma")
-os.execute("git config --global credential.helper 'cache --timeout=7776000")
+os.execute("git config --global credential.helper store")
 os.execute("rua install pyprland")
 os.execute("rua install xboxdrv-stable-git")
+os.execute("sudo npm install -g nodemon")
