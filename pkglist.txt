@@ -3,6 +3,7 @@ lutris
 wine-staging
 wine-mono
 nodejs
+npm
 hyprland
 xdg-desktop-portal-hyprland
 neovim

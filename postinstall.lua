@@ -1,6 +1,7 @@
 -- Install the aur helper rua
 os.execute("sudo pacman -S --needed --asdeps bubblewrap-suid libseccomp xz shellcheck cargo")
 os.execute("git clone https://aur.archlinux.org/rua.git")
+os.execute("rustup update")
 os.execute("cd rua && makepkg -si")
 os.execute("yes | rm -r rua")
 
