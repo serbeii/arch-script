@@ -68,3 +68,7 @@ gnome-software
 gvfs
 playerctl
 gradle
+fuser2
+webkit2gtk
+midori
+zoom
