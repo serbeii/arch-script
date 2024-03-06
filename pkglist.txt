@@ -23,7 +23,6 @@ grub
 efibootmgr
 flatpak
 vlc
-mesa
 clang
 intellij-idea-community-edition
 ripgrep
@@ -67,7 +66,7 @@ fwupd
 gnome-software
 gvfs
 playerctl
-fuser2
+fuse2
 webkit2gtk
 midori
 zoom

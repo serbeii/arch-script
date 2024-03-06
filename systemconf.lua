@@ -82,9 +82,11 @@ end
 
 local gpu_vendor = io.popen("lshw -C display | grep vendor"):read("*a")
 if gpu_vendor:lower():match("intel") then
+    packages:write("mesa\n")
     packages:write("vulkan-intel\n")
     packages:write("lib32-vulkan-intel\n")
 elseif gpu_vendor:lower():match("amd") then
+    packages:write("mesa\n")
     packages:write("vulkan-radeon\n")
     packages:write("lib32-vulkan-radeon\n")
 elseif gpu_vendor:lower():match("nvidia") then
