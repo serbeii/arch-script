@@ -68,6 +68,7 @@ gvfs
 playerctl
 fuse2
 webkit2gtk
-midori
 zoom
 tldr
+docker
+docker-compose

@@ -21,6 +21,11 @@ local initialPackages = {
 -- Set up timezone and calendar
 os.execute("ln -sf /usr/share/zoneinfo/Europe/Istanbul /etc/localtime")
 os.execute("hwclock --systohc")
+local locales = io.open("/etc/locale.gen", "a")
+if locales then
+    locales:write("en_US.UTF-8 UTF-8", "\n")
+    locales:write("en_US ISO-8859-1", "\n")
+end
 os.execute("locale-gen")
 local hostname = "/etc/hostname"
 
